@@ -1,8 +1,5 @@
 #pragma once
 
-
-// #define WINVER 0x0500
-
 #define WHITE   "\033[37m"
 
 
@@ -13,5 +10,5 @@ using std::string;
 
 int Menu();
 void Clicker();
-void inputTime(unsigned short* n);
-void PowerOff(unsigned short timer);
+void inputTime(int* n);
+void PowerOff(int timer);

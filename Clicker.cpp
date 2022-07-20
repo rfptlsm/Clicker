@@ -7,7 +7,7 @@
 
 int main(int argc, char const* argv[])
 {
-    unsigned short timer = Menu();
+    int timer = Menu();
     cout << timer << endl;
     PowerOff(timer);
     Clicker();
@@ -16,10 +16,15 @@ int main(int argc, char const* argv[])
     return 0;
 }
 
-void PowerOff(unsigned short timer)
+void PowerOff(int timer)
 {
-    if (timer <= 0)
+    if (timer == 0)
         return;
+    else if (timer <= -1)
+    {
+        cout << WHITE << "\nInterrupt system shutdown\n";
+        system("c:\\windows\\system32\\shutdown /a");
+    }
     else
     {
         timer *= 60;
@@ -40,7 +45,7 @@ int Menu()
     std::cout << "\t*                          *" << std::endl;
     std::cout << "\t****************************" << std::endl;
 
-    unsigned short time = 0;
+    int time = 0;
     std::thread t1(inputTime, &time);
 
     std::this_thread::sleep_for(std::chrono::seconds(10));
@@ -62,7 +67,7 @@ int Menu()
     return time;
 }
 
-void inputTime(unsigned short* n)
+void inputTime(int* n)
 {
     cout << WHITE << "\nEnter timer: ";
     cin >> *n;
@@ -72,6 +77,7 @@ void inputTime(unsigned short* n)
 
 void Clicker()
 {
+    const unsigned short TIME_SLEEP = 5;
     INPUT input;
     input.type = INPUT_KEYBOARD;
     input.ki.wVk = VK_LCONTROL; //VK_CONTROL;
@@ -79,7 +85,7 @@ void Clicker()
 
     while (true)
     {
-        std::this_thread::sleep_for(std::chrono::minutes(5));
+        std::this_thread::sleep_for(std::chrono::minutes(TIME_SLEEP));
         SendInput(1, &input, sizeof(INPUT));
     }
 }
